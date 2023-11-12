@@ -1,22 +1,40 @@
-const countriesAr = [
-    {
-        name: "eilat",
-        lon: 34.9455,
-        lat: 29.5582
-    },
-    {
-        name: "london",
-        lon: -0.0932,
-        let: 51.5162
-    },
-    {
-        name: "new-york",
-        lon: -73.983,
-        let: 40.6907
-    },
-    {
-        name: "alaska",
-        lon: -153.8572,
-        let: 66.0205
+
+
+const countriesAr = ["אילת", "ניו יורק", "אלסקה", "לונדון"]
+
+async function init() {
+    countriesAr.forEach(function (country) {
+        doApi(country);
+    })
+
+}
+
+
+
+
+const doApi = async (_name) => {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${_name}&units=metric&appid=8eb41fd3a1fded1f4701d691e170067c&lang=he`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        
+        let card = new Card("id_parent", data);
+        card.render();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
-]
+};
+
+
+
+
+init();
