@@ -24,7 +24,7 @@ const doApi = async (_name) => {
 
         const data = await response.json();
         console.log(data);
-        
+
         let card = new Card("id_parent", data);
         card.render();
         return data;
